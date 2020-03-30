@@ -3,7 +3,7 @@ from .locators import ProductPageLocators
 
 class ProductPage(BasePage):
 
-    def should_be_add_to_shoppingcart_button(self):
+    def should_be_button_add_to_shoppingcart(self):
         assert self.is_element_present(*ProductPageLocators.BUTTON_ADD_TO_BASKET), "Button add to shopping cart is not presented"
 
     def add_to_shopping_cart(self):
@@ -11,21 +11,26 @@ class ProductPage(BasePage):
         add_button.click()
 
     def should_be_success_message_about_add_to_shopping_cart(self):
-        assert self.is_element_present(*ProductPageLocators.MESSAGE_PRODUCT_ADD_TO_CART), "Message add to shopping cart is not presented"
+        assert self.is_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_ADD_TO_CART), "Message add to shopping cart is not presented"
 
-    def product_name_equal_product_name_in_success_message(self):
+    def product_name_equal_product_name_in_success_message(self, product_name):
+        success_message_product_add_to_cart = self.browser.find_element(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_ADD_TO_CART)
+        assert product_name in success_message_product_add_to_cart.text
+
+    def should_be_price(self):
+        product_price = self.is_element_present(*ProductPageLocators.PRODUCT_PRICE), "Product price is not presented"
+
+    def shoulb_be_price_in_message_add_to_shoppingcart(self):
+        product_price_in_message_add_to_shoppingcart = self.is_element_present(*ProductPageLocators.PRICE_IN_MESSAGE_PRODUCT_IN_SHOPPINGCART), "Product price in shoppingcart is not presented"
+
+    def product_price_equal_product_price_in_message_add_to_shoppingcart(self, product_price):
+        product_price_in_shoppingcart = self.browser.find_element(*ProductPageLocators.PRICE_IN_MESSAGE_PRODUCT_IN_SHOPPINGCART)
+        assert product_price == product_price_in_shoppingcart.text, "Product price and product price in message add to shoppingcart is not equal"
+
+    def return_product_name(self):
         product_name = self.browser.find_element(*ProductPageLocators.PRODUCT_NAME_H1)
-        success_message_add_to_cart = self.browser.find_element(*ProductPageLocators.MESSAGE_PRODUCT_ADD_TO_CART)
-        assert product_name.text in success_message_add_to_cart.text
+        return product_name.text
 
-    def should_be_cost(self):
-        product_cost = self.is_element_present(*ProductPageLocators.PRODUCT_COST), "Product cost is not presented"
-
-    def shoulb_be_cost_in_shoppingcart(self):
-        product_cost_in_shoppingcart = self.is_element_present(*ProductPageLocators.COST_IN_SHOPPINGCART), "Product cost in shoppingcart is not presented"
-
-    def product_cost_and_product_cost_in_shoppingcart_should_be_equal(self):
-        product_cost = self.browser.find_element(*ProductPageLocators.PRODUCT_COST)
-        product_cost_in_shoppingcart = self.browser.find_element(*ProductPageLocators.COST_IN_SHOPPINGCART)
-        assert product_cost.text == product_cost_in_shoppingcart.text, "Product cost and product cost in shoppingcart is not equal"
-
+    def return_product_price(self):
+        product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
+        return product_price.text
