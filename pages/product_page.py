@@ -18,10 +18,10 @@ class ProductPage(BasePage):
         assert product_name in success_message_product_add_to_cart.text
 
     def should_be_price(self):
-        product_price = self.is_element_present(*ProductPageLocators.PRODUCT_PRICE), "Product price is not presented"
+        assert self.is_element_present(*ProductPageLocators.PRODUCT_PRICE), "Product price is not presented"
 
     def shoulb_be_price_in_message_add_to_shoppingcart(self):
-        product_price_in_message_add_to_shoppingcart = self.is_element_present(*ProductPageLocators.PRICE_IN_MESSAGE_PRODUCT_IN_SHOPPINGCART), "Product price in shoppingcart is not presented"
+        assert self.is_element_present(*ProductPageLocators.PRICE_IN_MESSAGE_PRODUCT_IN_SHOPPINGCART), "Product price in shoppingcart is not presented"
 
     def product_price_equal_product_price_in_message_add_to_shoppingcart(self, product_price):
         product_price_in_shoppingcart = self.browser.find_element(*ProductPageLocators.PRICE_IN_MESSAGE_PRODUCT_IN_SHOPPINGCART)
@@ -34,3 +34,9 @@ class ProductPage(BasePage):
     def return_product_price(self):
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE)
         return product_price.text
+
+    def should_not_be_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_ADD_TO_CART), "Success message is presented, but should not be"
+
+    def should_disappeared_success_message(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_MESSAGE_PRODUCT_ADD_TO_CART), "Succeess message is presented, but should disappeared"
