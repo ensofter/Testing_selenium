@@ -25,6 +25,4 @@ class LoginPage(BasePage):
         repeat_password_field = self.browser.find_element(*LoginPageLocators.REPEAT_PASSWORD_FIELD)
         repeat_password_field.send_keys(password)
         submit_button = self.browser.find_element(*LoginPageLocators.SUBMIT_BUTTON)
-
-        time.sleep(4)
         submit_button.click()
